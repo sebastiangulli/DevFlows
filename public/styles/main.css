@@ -1,0 +1,67 @@
+/* VARIABLES */
+
+:root {
+    --light-bg-color: #f3f3f3;
+    --light-text-color: #0a0a0a;
+    --light-border-color: #1b1b1b;
+
+    --dark-bg-color: #0f0f0f;
+    --dark-text-color: #ffffff;
+    --dark-border-color: #dddddd;
+}
+
+/* FONT */
+
+@font-face {
+    font-family: 'SUSE';
+    src: url('../font/SUSE-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+/* ALL ELEMENTS */
+
+* {
+    font-family: suse, sans-serif;
+    
+    line-height: 1;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    outline: none;
+
+    text-decoration: none;
+    appearance: none;
+
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;  
+}
+
+/* SCROLLBAR */
+
+body::-webkit-scrollbar {
+    width: .8em;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+}
+
+/* ELEMENTS */
+
+ul, ol {
+    list-style-type: none;
+}
+
+button {
+    cursor: pointer;
+}
