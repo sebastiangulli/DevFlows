@@ -1,0 +1,31 @@
+.task {
+    position: relative;
+    display: inline-block;
+}
+
+.task-name {
+    font-size: 15px;
+
+    position: absolute;
+    width: max-content;
+
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.task-box {
+    padding: 15px;
+    border: 2px solid #000;
+    border-radius: 50%;
+
+    aspect-ratio: 1 / 1;
+}
+
+.task-icon {
+    width: 50px;
+    aspect-ratio: 1 / 1;
+    
+    stroke: #000;
+    stroke-width: 1.8;
+}
