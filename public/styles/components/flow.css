@@ -1,6 +1,14 @@
+.flow {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .flow-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
-    grid-template-rows: repeat(auto-fill, 200px);
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, 84px);
+    grid-template-rows: repeat(auto-fill, 84px);
+    gap: 150px;
 }

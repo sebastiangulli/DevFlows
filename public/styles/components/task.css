@@ -1,7 +1,21 @@
 .task {
     position: relative;
-    display: inline-block;
+    background-color: #fff;
     margin: auto;
+}
+
+.task:not(.last-task)::before {
+    content: '';
+    position: absolute;
+    background: #000;
+    
+    width: 150px;
+    height: 2px;
+
+    top: 50%;
+    right: 0;
+    transform: translate(100%, -50%);
+    z-index: -1;
 }
 
 .task-name {
