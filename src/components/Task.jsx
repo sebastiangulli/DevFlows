@@ -2,9 +2,9 @@ import { Icon } from "./Icon"
 import { toolPaths } from "../icons/toolPaths"
 import '../../public/styles/components/task.css'
 
-export const Task = ({ name, tool, position, row }) => {
+export const Task = ({ name, tool, position, row, isLastTask }) => {
     return (
-        <div className="flow__container__grid__task task"
+        <div className={`flow__container__grid__task task ${isLastTask ? 'last-task' : ''}`}
             style={{ gridColumn: position, gridRow: row}}>
             <span className="flow__container__grid__task__name task-name">
                 {name}
