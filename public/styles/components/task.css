@@ -1,10 +1,13 @@
 .task {
     position: relative;
     display: inline-block;
+    margin: auto;
 }
 
 .task-name {
     font-size: 15px;
+    text-align: center;
+    text-wrap: balance;
 
     position: absolute;
     width: max-content;
@@ -19,6 +22,7 @@
     border: 2px solid #000;
     border-radius: 50%;
 
+    width: fit-content;
     aspect-ratio: 1 / 1;
 }
 
