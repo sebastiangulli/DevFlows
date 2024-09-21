@@ -33,7 +33,7 @@
 }
 
 .merge::before {
-    width: 75px;
+    width: var(--line-width-merge);
     height: 91px;
 
     border-bottom-right-radius: 50px;

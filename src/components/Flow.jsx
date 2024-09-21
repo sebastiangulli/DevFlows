@@ -15,11 +15,11 @@ export const Flow = () => {
         { 'id': 8, 'name': 'Create Fork', 'tool': 'github', 'row': 1, 'position': 6, 'merge': null },
         { 'id': 5, 'name': 'HTTP request', 'tool': 'php', 'row': 2, 'position': 1, 'merge': null },
         { 'id': 6, 'name': 'ipconfig', 'tool': 'cli', 'row': 2, 'position': 2, 'merge': null },
-        { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 1 }
+        { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 2 }
     ])
 
-    const measureDiff = () => mergeTasks.map(task1 => task1.position - tasks.filter(task2 => task2.id === task1.merge)[0].id)[0]
-    const getMergePosition = () => mergeTasks.map(task1 => tasks.filter(task2 => task2.id === task1.merge)[0].position)[0]
+    const getMergePosition = () => mergeTasks.map(task1 => tasks.find(task2 => task2.id === task1.merge).position)[0]
+    const measureDiff = () => mergeTasks.map(task1 => task1.position - getMergePosition())[0]
 
     useEffect(() => {
         setMergeTasks(tasks.filter(task => task.merge))
@@ -31,6 +31,8 @@ export const Flow = () => {
         }
     }, [rowsNumber, tasks])
 
+    console.log(getMergePosition())
+
     return (
         <div className="flow">
             <div className="flow__container">
@@ -40,7 +42,7 @@ export const Flow = () => {
                             <Task merge={task.merge} name={task.name} tool={task.tool}
                                 isLastTask={lastTasksIds.includes(task.id) ? true : false}
                                 column={task.row === 1 & task.position >= getMergePosition() ? task.position + measureDiff() : task.position}
-                                row={task.row} key={index} lineWidth={task.row === 1 & task.position === getMergePosition() - 1 && 125 + 234 * measureDiff()}/>
+                                row={task.row} key={index} lineWidth={task.row === 1 & task.position === getMergePosition() - 1 ? 125 + 234 * measureDiff() : task.row === 2 & task.merge & task.position < getMergePosition() && 234 * (Math.abs(measureDiff()) - 1) + 75}/>
                         )
                     }
                 </div>
