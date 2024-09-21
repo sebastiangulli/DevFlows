@@ -8,6 +8,8 @@
     --dark-bg-color: #0f0f0f;
     --dark-text-color: #ffffff;
     --dark-border-color: #dddddd;
+
+    --line-width: 150px;
 }
 
 /* FONT */
@@ -43,7 +45,7 @@ html {
 body {
     width: 100%;
     min-height: 100vh;
-    overflow-x: hidden;  
+    overflow-x: visible;  
 }
 
 /* SCROLLBAR */

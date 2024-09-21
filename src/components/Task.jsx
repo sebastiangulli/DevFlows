@@ -2,10 +2,10 @@ import { Icon } from "./Icon"
 import { toolPaths } from "../icons/toolPaths"
 import '../../public/styles/components/task.css'
 
-export const Task = ({ name, tool, position, row, isLastTask }) => {
+export const Task = ({ name, tool, column, row, isLastTask, merge, lineWidth }) => {
     return (
-        <div className={`flow__container__grid__task task ${isLastTask ? 'last-task' : ''}`}
-            style={{ gridColumn: position, gridRow: row}}>
+        <div className={`flow__container__grid__task task ${merge ? 'merge' : ''} ${isLastTask ? 'last-task' : ''}`}
+            style={{ gridColumn: column, gridRow: row, '--line-width': `${lineWidth ? lineWidth : 150}px`}}>
             <span className="flow__container__grid__task__name task-name">
                 {name}
             </span>
