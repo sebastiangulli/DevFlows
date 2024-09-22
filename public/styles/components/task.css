@@ -34,24 +34,24 @@
 
 .merge::before {
     width: var(--line-width-merge);
-    height: 91px;
+    height: var(--line-height-merge);
 
     border-bottom-right-radius: 50px;
     border-top: none;
     border-left: none;
 
-    transform: translate(100%, -100%);
+    transform: translate(100%, calc(-100% + 1px));
 }
 
 .merge::after {
     width: 75px;
-    height: 90.5px;
+    height: 91px;
 
     border-top-left-radius: 50px;
     border-right: none;
     border-bottom: none;
 
-    transform: translate(calc(var(--line-width-merge) + 77px), -200%);
+    transform: translate(calc(var(--line-width-merge) + 77px), calc(var(--line-height-merge) - 2 * var(--line-height-merge) - 92px));
 }
 
 .task-name {

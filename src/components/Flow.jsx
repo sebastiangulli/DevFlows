@@ -19,7 +19,7 @@ export const Flow = () => {
         { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 8 },
         { 'id': 9, 'name': 'aaa0123', 'tool': 'css', 'row': 3, 'position': 1, 'merge': null },
         { 'id': 10, 'name': 'aaa', 'tool': 'css', 'row': 3, 'position': 2, 'merge': null },
-        { 'id': 11, 'name': 'pepe', 'tool': 'css', 'row': 3, 'position': 3, 'merge': null }
+        { 'id': 11, 'name': 'pepe', 'tool': 'css', 'row': 3, 'position': 3, 'merge': 3 }
     ])
 
     const defineTranslationRules = () => {
@@ -72,6 +72,14 @@ export const Flow = () => {
         }
     }
 
+    const setLineHeight = task => {
+        if (task.merge) {
+            let mergeRow = tasks.find(task2 => task2.id === task.merge).row
+            let rowDiff = task.row - mergeRow
+            return (184 * rowDiff) - 91
+        }
+    }
+
     return (
         <div className="flow">
             <div className="flow__container">
@@ -81,7 +89,7 @@ export const Flow = () => {
                             <Task merge={task.merge} name={task.name} tool={task.tool}
                                 isLastTask={lastTasksIds.includes(task.id) ? true : false}
                                 column={setColumn(task)} row={task.row} key={index}
-                                lineWidth={setLineWidth(task)}
+                                lineWidth={setLineWidth(task)} lineHeight={setLineHeight(task)}
                             />
                         )
                     }
