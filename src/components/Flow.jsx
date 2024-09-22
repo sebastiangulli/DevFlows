@@ -16,7 +16,10 @@ export const Flow = () => {
         { 'id': 8, 'name': 'Create Fork', 'tool': 'github', 'row': 1, 'position': 6, 'merge': null },
         { 'id': 5, 'name': 'HTTP request', 'tool': 'php', 'row': 2, 'position': 1, 'merge': null },
         { 'id': 6, 'name': 'ipconfig', 'tool': 'cli', 'row': 2, 'position': 2, 'merge': null },
-        { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 3 }
+        { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 8 },
+        { 'id': 9, 'name': 'aaa0123', 'tool': 'css', 'row': 3, 'position': 1, 'merge': null },
+        { 'id': 10, 'name': 'aaa', 'tool': 'css', 'row': 3, 'position': 2, 'merge': null },
+        { 'id': 11, 'name': 'pepe', 'tool': 'css', 'row': 3, 'position': 3, 'merge': null }
     ])
 
     const defineTranslationRules = () => {
@@ -30,24 +33,6 @@ export const Flow = () => {
     }
 
     const getTaskById = id => tasks.find(task => task.id === id)
-
-    const getMergeInfo = task => {
-        let task2 = tasks.find(taskMerge => taskMerge.id === task.merge)
-        return {
-            'from': { 'id': task.id, 'row': task.row, 'position': task.position },
-            'to': { 'id': task2.id, 'row': task2.row, 'position': task2.position }
-        }
-    }
-
-    const getMergeDiff = task => {
-        let mergeInfo = getMergeInfo(task)
-        let positionsDiff = mergeInfo.from.position - mergeInfo.to.position
-        let rowsDiff = mergeInfo.from.row - mergeInfo.to.row
-        return {
-            'position': positionsDiff,
-            'row': rowsDiff
-        }
-    }
 
     useEffect(() => {
         defineTranslationRules()
@@ -74,6 +59,19 @@ export const Flow = () => {
         } else return task.position + setTranslate(task)
     }
 
+    const setLineWidth = task => {
+        if (task.merge) {
+            let columnDiff = setColumn(getTaskById(task.merge)) - setColumn(task)
+            return 234 * (columnDiff - 1) + 75
+        } else {
+            let nextTask = tasks.filter(task2 => task2.row === task.row).find(task2 => task2.position - 1 === task.position)
+            if (nextTask) {
+                let columnDiff = (setColumn(nextTask) - setColumn(task))
+                if (columnDiff > 1) return 125 + 234 * (columnDiff - 1)
+            }
+        }
+    }
+
     return (
         <div className="flow">
             <div className="flow__container">
@@ -83,6 +81,7 @@ export const Flow = () => {
                             <Task merge={task.merge} name={task.name} tool={task.tool}
                                 isLastTask={lastTasksIds.includes(task.id) ? true : false}
                                 column={setColumn(task)} row={task.row} key={index}
+                                lineWidth={setLineWidth(task)}
                             />
                         )
                     }

@@ -51,7 +51,7 @@
     border-right: none;
     border-bottom: none;
 
-    transform: translate(calc(100% + 75px), -200%);
+    transform: translate(calc(var(--line-width-merge) + 77px), -200%);
 }
 
 .task-name {
