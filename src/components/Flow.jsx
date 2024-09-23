@@ -8,27 +8,33 @@ export const Flow = () => {
     const [translateRules, setTranslateRules] = useState([])
 
     const [tasks, setTasks] = useState([
-        { 'id': 0, 'name': 'Init git repository', 'tool': 'git', 'row': 1, 'position': 1, 'merge': null },
-        { 'id': 1, 'name': 'Create container', 'tool': 'docker', 'row': 1, 'position': 2, 'merge': null },
-        { 'id': 2, 'name': 'Design header', 'tool': 'react', 'row': 1, 'position': 3, 'merge': null },
-        { 'id': 3, 'name': 'Add api connection', 'tool': 'node', 'row': 1, 'position': 4, 'merge': null },
-        { 'id': 4, 'name': 'Apply stylesheet', 'tool': 'css', 'row': 1, 'position': 5, 'merge': null },
-        { 'id': 8, 'name': 'Create Fork', 'tool': 'github', 'row': 1, 'position': 6, 'merge': null },
-        { 'id': 5, 'name': 'HTTP request', 'tool': 'php', 'row': 2, 'position': 1, 'merge': null },
-        { 'id': 6, 'name': 'ipconfig', 'tool': 'cli', 'row': 2, 'position': 2, 'merge': null },
-        { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 8 },
-        { 'id': 9, 'name': 'aaa0123', 'tool': 'css', 'row': 3, 'position': 1, 'merge': null },
-        { 'id': 10, 'name': 'aaa', 'tool': 'css', 'row': 3, 'position': 2, 'merge': null },
-        { 'id': 11, 'name': 'pepe', 'tool': 'css', 'row': 3, 'position': 3, 'merge': 3 }
+        { 'id': 0, 'name': 'Init git repository', 'tool': 'git', 'row': 1, 'position': 1, 'merge': null, 'branch': null },
+        { 'id': 1, 'name': 'Create container', 'tool': 'docker', 'row': 1, 'position': 2, 'merge': null, 'branch': null },
+        { 'id': 2, 'name': 'Design header', 'tool': 'react', 'row': 1, 'position': 3, 'merge': null, 'branch': null },
+        { 'id': 3, 'name': 'Add api connection', 'tool': 'node', 'row': 1, 'position': 4, 'merge': null, 'branch': null },
+        { 'id': 4, 'name': 'Apply stylesheet', 'tool': 'css', 'row': 1, 'position': 5, 'merge': null, 'branch': null },
+        { 'id': 8, 'name': 'Create Fork', 'tool': 'github', 'row': 1, 'position': 6, 'merge': null, 'branch': null },
+        { 'id': 5, 'name': 'HTTP request', 'tool': 'php', 'row': 2, 'position': 1, 'merge': null, 'branch': 9 },
+        { 'id': 6, 'name': 'ipconfig', 'tool': 'cli', 'row': 2, 'position': 2, 'merge': null, 'branch': null },
+        { 'id': 7, 'name': 'fetch', 'tool': 'js', 'row': 2, 'position': 3, 'merge': 8, 'branch': null },
+        { 'id': 9, 'name': 'aaa0123', 'tool': 'css', 'row': 3, 'position': 1, 'merge': null, 'branch': null },
+        { 'id': 10, 'name': 'aaa', 'tool': 'css', 'row': 3, 'position': 2, 'merge': 3, 'branch': null }
     ])
 
     const defineTranslationRules = () => {
         let mergedTasks = tasks.filter(task1 => tasks.map(task2 => task2.merge).includes(task1.id))
+        let branchedTasks = tasks.filter(task1 => tasks.map(task2 => task2.branch).includes(task1.id))
         mergedTasks.map(task => {
             let mergeFrom = tasks.filter(item => item.merge === task.id)
             let lastMergePosition = mergeFrom.reduce((lastItem, item) => item.position > lastItem ? item.position : lastItem, 1)
             let positionDiff = task.position - lastMergePosition
-            if (positionDiff < 1) setTranslateRules(prev => [...prev, { 'row': task.row, 'rules': [{'startPostion': task.position, 'translate': Math.abs(positionDiff) + 1}]}])
+            if (positionDiff < 1) setTranslateRules(prev => [...prev, { 'row': task.row, 'rules': [{ 'startPostion': task.position, 'translate': Math.abs(positionDiff) + 1 }] }])
+        })
+        branchedTasks.map(task => {
+            let branchFrom = tasks.filter(item => item.branch === task.id)
+            let lastBranchPosition = branchFrom.reduce((lastItem, item) => item.position > lastItem ? item.position : lastItem, 1)
+            let positionDiff = task.position - lastBranchPosition
+            if (positionDiff < 1) setTranslateRules(prev => [...prev, { 'row': task.row, 'rules': [{ 'startPostion': task.position, 'translate': Math.abs(positionDiff) + 1 }] }])
         })
     }
 
@@ -52,6 +58,11 @@ export const Flow = () => {
 
     const setColumn = task => {
         let mergeTasks = tasks.filter(item => item.merge === task.id)
+        let branchTasks = tasks.filter(item => item.branch === task.id)
+        if (branchTasks.length) {
+            let lastBranchPosition = branchTasks.reduce((lastItem, item) => item.position > lastItem ? item.position : lastItem, 1)
+            return lastBranchPosition + 1
+        }
         if (mergeTasks.length) {
             let lastMergePosition = mergeTasks.reduce((lastItem, item) => item.position > lastItem ? item.position : lastItem, 1)
             if (task.position - lastMergePosition >= 1) return task.position + setTranslate(task)
@@ -86,7 +97,7 @@ export const Flow = () => {
                 <div className="flow__container__grid flow-grid">
                     {
                         tasks.map((task, index) =>
-                            <Task merge={task.merge} name={task.name} tool={task.tool}
+                            <Task merge={task.merge} branch={task.branch} name={task.name} tool={task.tool}
                                 isLastTask={lastTasksIds.includes(task.id) ? true : false}
                                 column={setColumn(task)} row={task.row} key={index}
                                 lineWidth={setLineWidth(task)} lineHeight={setLineHeight(task)}
